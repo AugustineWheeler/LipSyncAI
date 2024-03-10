@@ -62,9 +62,6 @@ model.load("model/checkpoint")
 
 ## Contributors 
 
-- Arnav Sharma
-- Kushagra Singhal
-- Ayush Kumar
-- Nikhal Regi 
+- Augustine Wheeler
 
 ---
