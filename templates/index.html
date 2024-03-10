@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+
+    <title>Lip Reading Website</title>
+    <style>
+     
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        overflow: hidden;
+        height: 100vh;
+        padding: 0;
+        background: #000;
+        color: white;
+        display: flex;
+      }
+
+      /* header {
+        background-color: #000;
+        color: white;
+        text-align: start;
+        font-size: 20px;
+        padding: 1em;
+        z-index: -5;
+        animation: fade-in 2s ease-in-out forwards;
+      } */
+
+      #intro-scene {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; 
+  animation: intro-animation 2s ease-out forwards;
+}
+
+.intro-title {
+  font-size: 4rem;
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.intro-image {
+  width: 125px;
+}
+
+      main {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        align-items: center;
+        /* height: 80vh; */
+      }
+
+      /* select {
+        padding: 2%;
+        border-radius: 20px;
+        font-size: 16px;
+        background-color: rgb(93, 46, 122);
+        width: 23%;
+        margin-bottom: 20px;
+        animation: fade-in 4s ease-out forwards;
+      } */
+
+      select {
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 16px;
+        background-color: rgb(93, 46, 122);
+        color: white;
+        border: none;
+        appearance: none; 
+        -webkit-appearance: none; 
+        -moz-appearance: none; 
+        width: 100%;
+        width: 23%;
+        margin-bottom: 20px;
+        animation: fade-in 4s ease-out forwards;
+        max-width: 300px; 
+        cursor: pointer;
+}
+
+select::after {
+  content: "\25BC"; 
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(107, 70, 193, 0.5); 
+}
+
+
+      .results {
+        margin-top: 10px;
+        /* padding-left: 10px; */
+        display: flex;
+        /* flex-direction: column; */
+        justify-content: space-between;
+      }
+
+      video {
+        width: 100vh;
+        border-radius: 20px;
+      }
+
+      main {
+        z-index: 5;
+      }
+
+      .orb1 {
+        height: 340px;
+        width: 340px;
+        border-radius: 50%;
+        position: absolute;
+        filter: blur(150px);
+        /* background: rgb(191, 94, 252); */
+        animation: glow1 10s ease-in-out infinite alternate;
+        top: -200px;
+        right: -200px;
+        z-index: 2;
+      }
+
+      .orb2 {
+        height: 300px;
+        width: 300px;
+        border-radius: 50%;
+        position: absolute;
+        filter: blur(150px);
+        /* background: rgb(173, 182, 251); */
+        animation: glow2 9s ease-out infinite alternate;
+        bottom: -10px;
+        left: -150px;
+      }
+      .orb3 {
+        height: 200px;
+        position: absolute;
+        width: 200px;
+        /* background: rgb(255, 0, 0); */
+        top: -100px;
+        filter: blur(150px);
+        left: 10%;
+        transform: translateX(-50%);
+        z-index: 1;
+        animation: glow3 8s ease-in infinite alternate;
+      }
+
+      .orb4 {
+        position: absolute;
+        height: 250px;
+        filter: blur(150px);
+        width: 250px;
+        bottom: 50px;
+        right: 20%;
+        transform: translateX(50%);
+        z-index: -1;
+        animation: glow4 10s ease-in-out infinite alternate;
+      }
+      .orb5 {
+        position: absolute;
+        height: 250px;
+        filter: blur(150px);
+        width: 250px;
+        bottom: 280px;
+        right: 55%;
+        transform: translateX(50%);
+        z-index: -1;
+        animation: glow5 10s ease-in-out infinite alternate;
+      }
+
+      @keyframes glow4 {
+        0% {
+          background-color: rgba(191, 94, 252, 0.3);
+        }
+        100% {
+          background-color: rgba(191, 94, 252, 1);
+        }
+      }
+      @keyframes glow1 {
+        0% {
+          background-color: rgba(191, 94, 252, 0.3);
+        }
+        100% {
+          background-color: rgba(191, 94, 252, 1);
+        }
+      }
+      @keyframes glow2 {
+        0% {
+          background-color: rgba(173, 182, 251, 0.3);
+        }
+        100% {
+          background-color: rgba(173, 182, 251, 1);
+        }
+      }
+      @keyframes glow3 {
+        0% {
+          background-color: rgba(173, 182, 251, 0.3);
+        }
+        100% {
+          background-color: rgba(173, 182, 251, 1);
+        }
+      }
+      @keyframes glow5 {
+        0% {
+          background-color: rgba(173, 182, 251, 0.3);
+        }
+        100% {
+          background-color: rgba(173, 182, 251, 1);
+        }
+      }
+
+      .results-1 {
+        margin-right: 10px;
+      }
+      @keyframes move-left {
+        from {
+          transform: translateX(-100%);
+          opacity: 0%;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 100%;
+        }
+      }
+      .move-from-left {
+        animation: move-left 2s ease-in-out forwards;
+      }
+
+      @keyframes move-right {
+        from {
+          transform: translateX(100%);
+          opacity: 0%;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 100%;
+        }
+      }
+      .move-from-right {
+        animation: move-right 2s ease-in-out forwards;
+      }
+
+      @keyframes move-top {
+        from {
+          transform: translateY(-100%);
+          opacity: 0%;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 100%;
+        }
+      }
+
+      .move-from-top {
+        animation: move-top 2s ease-in-out forwards;
+      }
+
+      @keyframes comeup {
+        from {
+          transform: translateY(50%);
+          opacity: 0%;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 100%;
+        }
+      }
+
+      @keyframes move-bottom {
+        from {
+          transform: translateY(100%);
+          opacity: 0%;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 100%;
+        }
+      }
+      .move-from-bottom {
+        animation: move-bottom 2s ease-in-out forwards;
+      }
+      @keyframes fade-in {
+        from {
+          opacity: 0%;
+        }
+        to {
+          opacity: 100%;
+        }
+      }
+
+      @keyframes intro-animation {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+    </style>
+  </head>
+
+  <body class="bg-black text-white">
+    <!-- <header class="">
+      <h1 class="pl-5 text-2xl">
+        <span class="text-red-500 text-4xl">Lip</span>Sync
+      </h1>
+      <img
+        class="h-10 w-[25px]"
+        src="https://media.tenor.com/dHpPBNmAtl0AAAAi/waves.gif"
+        alt=""
+        style="margin-top: -20px; width: 125px"
+      />
+    </header> -->
+    <div id="intro-scene">
+      <h1 class="intro-title">
+        <span class="text-red-500 text-4xl">Lip</span>Sync
+      </h1>
+      <img
+        class="intro-image"
+        src="https://media.tenor.com/dHpPBNmAtl0AAAAi/waves.gif"
+        alt=""
+      />
+    </div>
+    <main>
+      <div id="video-container">
+        <div class="sm:flex gap-12 items-center">
+          <div>
+            <select id="video-selector">
+              <!-- Add options dynamically using server-side code -->
+            </select>
+            <div
+              class="p-4 video-inside-container move-from-left"
+              style="border-radius: 30px"
+            >
+            <iframe src="https://www.veed.io/embed/d49a28cf-64f7-4391-afb5-ee8ce6e225c2" width="800" height="404" frameborder="0" title="WhatsApp Video 2024-02-01 at 16.50.01_762b44e0" webkitallowfullscreen mozallowfullscreen  allowfullscreen></iframe>            </div>
+            <!-- <iframe src="https://www.veed.io/embed/{link}" width="444" height="404" frameborder="0" title="WhatsApp Video 2024-02-01 at 16.50.01_762b44e0" webkitallowfullscreen mozallowfullscreen  allowfullscreen></iframe>            </div> -->
+            <div id="prediction-results" class="results">
+              <div
+                class="h-40 w-96 p-3 border-white results-1 move-from-bottom"
+                style="border-radius: 20px; background-color: #131313fc"
+              >
+              <!-- <iframe src="https://www.veed.io/embed/{link}" width="744" height="504" frameborder="0" title="WhatsApp Video 2024-02-01 at 16.50.01_762b44e0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
+              </div>
+              <div
+                class="h-40 w-96 p-3 border-white sm:flex flex-col results-2 move-from-right"
+                style="border-radius: 20px; background-color: #1e1e1e"
+              >
+              <p>
+                {{ data['sentence'] }}
+                <!-- answer -->
+            </p>
+                <p class="w-[100%] h-full"></p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="w-80  p-4 move-from-top"
+            style="border-radius: 30px; background-color: #131313fc; height: 570px; margin-top: 90px;"
+          >
+              Raw Output:"{{ data['array'] }}"
+              <!-- array -->
+            
+          </div>
+        </div>
+        <div class="orb1 glowing"></div>
+        <div class="orb2 glowing"></div>
+        <div class="orb3 glowing"></div>
+        <div class="orb4 glowing"></div>
+        <div class="orb5 glowing"></div>
+      </div>
+    </main>
+
+   <!-- ... (your existing HTML code) ... -->
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var videoSelector = document.getElementById("video-selector");
+    var videoPlayer = document.getElementById("lip-reading-video");
+    var predictionResults = document.getElementById("prediction-results");
+    var rawOutput = document.getElementById("raw-output");
+    
+    // Populate the select options dynamically
+    var videoOptions = ["video1.mp4", "video2.mp4", "video3.mp4"];
+    for (var i = 0; i < videoOptions.length; i++) {
+      var option = document.createElement("option");
+      option.value = videoOptions[i];
+      option.text = videoOptions[i];
+      videoSelector.appendChild(option);
+    }
+
+    videoSelector.addEventListener("change", function () {
+      var selectedVideo = videoSelector.value;
+      var videoPath = "path/to/videos/" + selectedVideo;
+      videoPlayer.src = videoPath;
+
+      // Make a fetch request to your FastAPI endpoint
+      fetch("/lip-read", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ videoPath: videoPath }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Update the DOM with the received data
+          predictionResults.innerHTML = `
+            <div class="h-40 w-96 p-3 border-white results-1 move-from-bottom" style="border-radius: 20px; background-color: #131313fc">
+              <!-- You can customize this based on the structure of your data -->
+              ${data.text}
+            </div>
+            <div class="h-40 w-96 p-3 border-white sm:flex flex-col results-2 move-from-right" style="border-radius: 20px; background-color: #1e1e1e">
+              <p>${data.array}</p>
+              <p class="w-[100%] h-full"></p>
+            </div>
+          `;
+          rawOutput.innerHTML = `Raw Output: ${data.array}`;
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    });
+  });
+</script>
+
+<!-- ... (your existing HTML code) ... -->
+>
+  </body>
+</html>
